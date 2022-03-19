@@ -30,7 +30,10 @@ import {
   Option,
   Switch,
   DatePicker,
-  Dialog
+  Dialog,
+  Pagination,
+  MessageBox,
+  Message
 } from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import router from '../router/index.js'
@@ -41,6 +44,7 @@ import '../api/mock.js'
 
 Vue.config.productionTip = false
 
+Vue.use(Pagination)
 Vue.use(Dialog)
 Vue.use(Input)
 Vue.use(Select)
@@ -73,6 +77,8 @@ Vue.use(Form)
 Vue.use(FormItem)
 
 Vue.prototype.$http = http
+Vue.prototype.$confirm = MessageBox.confirm
+Vue.prototype.$message = Message
 
 new Vue({
   store,
