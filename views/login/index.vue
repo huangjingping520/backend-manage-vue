@@ -1,35 +1,11 @@
 <template>
-  <el-form 
-    :model="form"
-    status-icon
-    :rules="rules"
-    label-width="100px"
-    class="login-container">
+  <el-form :model="form" status-icon :rules="rules" label-width="100px" class="login-container">
     <h3 class="login-title">系统登录</h3>
-    <el-form-item
-      label="用户名"
-      label-width="80px"
-      prop="username"
-      class="username">
-      <el-input
-        type="input"
-        v-model="form.username"
-        autocomplete="off"
-        placeholder="请输入账号"
-      >
-      </el-input>
+    <el-form-item label="用户名" label-width="80px" prop="username" class="username">
+      <el-input type="input" v-model="form.username" autocomplete="off" placeholder="请输入账号"></el-input>
     </el-form-item>
-    <el-form-item
-      label="密码"
-      label-width="80px"
-      prop="password"
-    >
-      <el-input
-        type="password"
-        v-model="form.password"
-        autocomplete="off"
-        placeholder="请输入密码"
-      ></el-input>
+    <el-form-item label="密码" label-width="80px" prop="password">
+      <el-input type="password" v-model="form.password" autocomplete="off" placeholder="请输入密码"></el-input>
     </el-form-item>
     <el-form-item class="login_submit">
       <el-button type="primary" @click="login" class="login_submit">登陆</el-button>
@@ -38,6 +14,8 @@
 </template>
 
 <script>
+// import Mock from 'mockjs'
+import { getMenu } from '../../api/data'
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: 'login',
@@ -64,19 +42,27 @@ export default {
             required: true,
             message: '请输入密码',
             trigger: 'blur'
-          },
-          {
-            min: 6,
-            message: "密码长度不能小于6",
-            trigger: 'blur'
           }
         ]
       }
     }
   },
   methods: {
-    login () {
-
+    login() {
+      getMenu(this.form).then(({ data: res }) => {
+        if (res.code === 20000) {
+          this.$store.commit('clearMenu')
+          this.$store.commit('setMenu', res.data.menu)
+          this.$store.commit('setToken', res.data.token)
+          this.$store.commit('addMenu', this.$router)
+          this.$router.push({ name: 'home' })
+        } else {
+          this.$message.warning(res.data.message)
+        }
+      })
+      // const token = Mock.random.guid()
+      // this.$store.commit('setToken', token)
+      // this.$router.push({ name: 'home' })
     }
   }
 }

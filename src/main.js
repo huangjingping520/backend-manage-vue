@@ -80,8 +80,21 @@ Vue.prototype.$http = http
 Vue.prototype.$confirm = MessageBox.confirm
 Vue.prototype.$message = Message
 
+router.beforeEach((to, from, next) => {
+  store.commit('getToken')
+  const token =  store.state.user.token
+  if (!token && to.name !== 'login') {
+    next({ name: 'login' })
+  } else {
+    next()
+  }
+})
+
 new Vue({
   store,
   router,
-  render: (h) => h(App)
+  render: (h) => h(App),
+  created() {
+    store.commit('addMenu', router)
+  }
 }).$mount('#app')
