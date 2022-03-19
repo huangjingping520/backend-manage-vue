@@ -22,7 +22,15 @@ import {
   TableColumn,
   Breadcrumb,
   BreadcrumbItem,
-  Tag
+  Tag,
+  Form,
+  FormItem,
+  Input,
+  Select,
+  Option,
+  Switch,
+  DatePicker,
+  Dialog
 } from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import router from '../router/index.js'
@@ -33,6 +41,12 @@ import '../api/mock.js'
 
 Vue.config.productionTip = false
 
+Vue.use(Dialog)
+Vue.use(Input)
+Vue.use(Select)
+Vue.use(Option)
+Vue.use(Switch)
+Vue.use(DatePicker)
 Vue.use(Button)
 Vue.use(Radio)
 Vue.use(Container)
@@ -55,6 +69,8 @@ Vue.use(TableColumn)
 Vue.use(Breadcrumb)
 Vue.use(BreadcrumbItem)
 Vue.use(Tag)
+Vue.use(Form)
+Vue.use(FormItem)
 
 Vue.prototype.$http = http
 
